@@ -1,6 +1,6 @@
 sparklyr::compile_package_jars(
   sparklyr::spark_compilation_spec(spark_version="1.6.1",
-                                   scalac_path=sparklyr::find_scalac("2.10", locations = "/usr/local/scala"),
+                                   scalac_path=sparklyr::find_scalac("2.10", locations = "C:/Users/chapm/Documents/scala"),
                                    jar_name="sparkhello-1.6-2.10.jar")
 )
 
@@ -40,7 +40,8 @@ spark_doNothing(test_tbl)
 
 sparklyr::invoke_static(spark_connection(test_tbl), "SparkHello.HelloWorld", "count", spark_dataframe(test_tbl))
 
-sparklyr::invoke_static(spark_connection(test_tbl), "SparkHello.HelloWorld", "doNothing", spark_dataframe(test_tbl))
+test_tbl2 <- sdf_register(
+  sparklyr::invoke_static(spark_connection(test_tbl), "SparkHello.HelloWorld", "doNothing", spark_dataframe(test_tbl)))
 
 test1_tbl <- sdf_register(
   sparklyr::invoke_static(spark_connection(test_tbl), "SparkHello.HelloWorld", "addOne", spark_dataframe(test_tbl), "test", "test1")
